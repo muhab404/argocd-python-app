@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helm-python-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/muhab404/helm-python-app
+    targetRevision: main   
+    path: .                
+    helm:
+      releaseName: python-app
+      # values: |
+      #   image:
+      #     repository: 256057170649.dkr.ecr.us-east-1.amazonaws.com/python-app
+      #     tag: latest
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: python-app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
